@@ -49,42 +49,37 @@ namespace Hubtel.eCommerce.Cart.Api.Services
 
             if (queryParams.PhoneNumber != default)
             {
-                items.Where(e => e.User.PhoneNumber == queryParams.PhoneNumber);
+                items = items.Where(e => e.User.PhoneNumber == queryParams.PhoneNumber);
             }
 
             if (queryParams.ProductId != default)
             {
-                items.Where(e => e.User.PhoneNumber == queryParams.PhoneNumber);
-            }
-
-            if (queryParams.ProductId != default)
-            {
-                items.Where(e => e.ProductId == queryParams.ProductId);
+                items = items.Where(e => e.ProductId == queryParams.ProductId);
             }
 
             if (queryParams.MinQuantity != default)
             {
-                items.Where(e => e.Quantity >= queryParams.MinQuantity);
+                items = items.Where(e => e.Quantity >= queryParams.MinQuantity);
             }
 
             if (queryParams.MaxQuantity != default)
             {
-                items.Where(e => e.Quantity <= queryParams.MaxQuantity);
+                items = items.Where(e => e.Quantity <= queryParams.MaxQuantity);
             }
 
             if (queryParams.From != default)
             {
-                items.Where(e => e.Quantity <= queryParams.MaxQuantity);
+                items = items.Where(e => e.Quantity <= queryParams.MaxQuantity);
             }
 
             if (queryParams.From != default)
             {
-                items.Where(e => e.CreatedAt >= queryParams.From);
+                items = items.Where(e => e.CreatedAt >= queryParams.From);
             }
 
             if (queryParams.To != default)
             {
-                items.Where(e => e.CreatedAt <= queryParams.To);
+                items = items.Where(e => e.CreatedAt <= queryParams.To);
             }
 
             var query = items.Include(item => item.Product)
