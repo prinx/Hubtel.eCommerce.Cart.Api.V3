@@ -1,9 +1,7 @@
 ﻿using Hubtel.eCommerce.Cart.Api.Exceptions;
-using Hubtel.eCommerce.Cart.Api.Models;
 using Hubtel.eCommerce.Cart.Api.Services;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Hubtel.eCommerce.Cart.Api.Middlewares

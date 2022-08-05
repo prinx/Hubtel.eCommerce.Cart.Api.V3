@@ -1,5 +1,6 @@
 ﻿using Hubtel.eCommerce.Cart.Api.Middlewares;
 using Hubtel.eCommerce.Cart.Api.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace Hubtel.eCommerce.Cart.Api.Extensions
