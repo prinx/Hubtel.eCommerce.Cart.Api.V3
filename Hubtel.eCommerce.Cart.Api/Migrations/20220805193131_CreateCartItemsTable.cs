@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-#nullable disable
-
 namespace Hubtel.eCommerce.Cart.Api.Migrations
 {
     public partial class CreateCartItemsTable : Migration
@@ -14,12 +12,12 @@ namespace Hubtel.eCommerce.Cart.Api.Migrations
                 name: "CartItems",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ProductId = table.Column<long>(nullable: false),
+                    UserId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
