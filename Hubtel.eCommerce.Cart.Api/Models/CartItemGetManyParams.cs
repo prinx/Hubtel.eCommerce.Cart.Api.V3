@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hubtel.eCommerce.Cart.Api.Models
 {
+    [NotMapped]
     public class CartItemGetManyParams
     {
         public string PhoneNumber { get; set; } = default;
