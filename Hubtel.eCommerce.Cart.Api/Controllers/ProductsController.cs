@@ -38,7 +38,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 Status = (int)HttpStatusCode.OK,
                 Success = true,
-                Message = $"{products.Items.Count} product(s) found",
+                Message = $"{products.Items.Count} product(s) found.",
                 Data = products
             });
         }
@@ -114,7 +114,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 return InternalServerError(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
             }
 
@@ -142,7 +142,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             if (_productsService.ProductExists(product.Name))
             {
                 _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Products: " +
-                    $"Product with Name {product.Name} already exists. ");
+                    $"Product with Name {product.Name} already exists.");
                 
                 return Conflict(new ApiResponseDTO
                 {
@@ -211,7 +211,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 return InternalServerError(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
             }
 

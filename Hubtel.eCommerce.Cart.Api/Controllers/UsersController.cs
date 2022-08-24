@@ -38,7 +38,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 Status = (int)HttpStatusCode.OK,
                 Success = true,
-                Message = $"{users.Items.Count} user(s) found",
+                Message = $"{users.Items.Count} user(s) found.",
                 Data = users
             });
         }
@@ -113,7 +113,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 return InternalServerError(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
             }
 
@@ -123,9 +123,9 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 Status = (int)HttpStatusCode.OK,
                 Success = true,
-                Message = "User updated successfully",
+                Message = "User updated successfully.",
                 Data = user
-            }); ;
+            });
         }
 
         // POST: api/v1/Users
@@ -190,7 +190,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 return InternalServerError(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
             }
 
@@ -200,7 +200,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 Status = (int)HttpStatusCode.OK,
                 Success = true,
-                Message = "User deleted successfully"
+                Message = "User deleted successfully."
             });
         }
     }

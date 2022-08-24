@@ -46,7 +46,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 {
                     Status = (int)HttpStatusCode.Created,
                     Success = true,
-                    Message = "Item(s) added to cart successfully",
+                    Message = "Item(s) added to cart successfully.",
                     Data = newItem
                 });
             }
@@ -60,7 +60,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 return InternalServerError(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
             }
 
@@ -102,7 +102,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 return InternalServerError(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
             }
 
@@ -201,7 +201,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            message = "Found.";
+            message = "Ok";
             _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts/{userId}/{productId}: {message}");
 
             return Ok(new ApiResponseDTO
@@ -233,7 +233,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         //        });
         //    }
 
-        //    message = "Found.";
+        //    message = "Ok";
         //    _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts/{id}: {message}");
 
         //    return Ok(new ApiResponseDTO

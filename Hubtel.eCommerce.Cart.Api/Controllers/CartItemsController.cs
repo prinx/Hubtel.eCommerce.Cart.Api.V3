@@ -33,7 +33,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             var pageItems = await _cartItemsService.GetCartItems(queryParams);
 
-            var message = $"{pageItems.Items.Count} cart item(s) Found.";
+            var message = $"{pageItems.Items.Count} cart item(s) found.";
                 
             _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/CartItems: {message}");
 
@@ -65,7 +65,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            message = "Found.";
+            message = "Ok";
             _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/CartItems/{id}: {message}");
 
             return Ok(new ApiResponseDTO
@@ -115,7 +115,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 var responseData = JsonSerializer.Serialize(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
 
                 return new ContentResult
@@ -151,7 +151,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 {
                     Status = (int)HttpStatusCode.Created,
                     Success = true,
-                    Message = "Product(s) added to cart successfully",
+                    Message = "Product(s) added to cart successfully.",
                     Data = newItem
                 });
             }
@@ -166,7 +166,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 var responseData = JsonSerializer.Serialize(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
 
                 return new ContentResult
@@ -216,7 +216,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 var responseData = JsonSerializer.Serialize(new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Message = "Something went wrong"
+                    Message = "Something went wrong."
                 });
 
                 return new ContentResult
@@ -229,7 +229,12 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/CartItems/{id}: Cart deleted successfully.");
 
-            return NoContent();
+            return Ok(new ApiResponseDTO
+            {
+                Status = (int)HttpStatusCode.OK,
+                Success = true,
+                Message = "cart item deleted successfully."
+            });
         }
     }
 }
