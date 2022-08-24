@@ -8,7 +8,7 @@ namespace Hubtel.eCommerce.Cart.Api.Services
     {
         public void ValidateGetCartItemsQueryString(CartItemGetManyParams queryParams);
 
-        public Task<Pagination<CartItem>> GetCartItems(CartItemGetManyParams queryParams);
+        public Task<Pagination<CartDTO>> GetCartItems(CartItemGetManyParams queryParams);
 
         public Task<CartItem> GetSingleCartItem(long id);
 

@@ -13,7 +13,7 @@ namespace Hubtel.eCommerce.Cart.Api.Services
         {
             pageSize = pageSize == 0 ? _defaultPageSize : pageSize;
 
-            Pagination <T> pagination = new Pagination<T>
+            Pagination<T> pagination = new Pagination<T>
             {
                 CurrentPage = currentPage,
                 PageSize = pageSize,

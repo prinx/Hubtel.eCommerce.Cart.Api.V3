@@ -41,52 +41,59 @@ namespace Hubtel.eCommerce.Cart.Api.Services
             ValidatePaginationQueryString(queryParams.Page, queryParams.PageSize);
         }
 
-        public async Task<Pagination<CartItem>> GetCartItems(CartItemGetManyParams queryParams)
+        public async Task<Pagination<CartDTO>> GetCartItems(CartItemGetManyParams queryParams)
         {
-            _context.ChangeTracker.LazyLoadingEnabled = false;
-
-            var items = _context.CartItems.AsNoTracking();
+            var query = _context.CartItems.AsQueryable();
 
             if (queryParams.PhoneNumber != default)
             {
-                items = items.Where(e => e.User.PhoneNumber == queryParams.PhoneNumber);
+                query = query.Where(e => e.User.PhoneNumber == queryParams.PhoneNumber);
             }
 
             if (queryParams.ProductId != default)
             {
-                items = items.Where(e => e.ProductId == queryParams.ProductId);
+                query = query.Where(e => e.ProductId == queryParams.ProductId);
             }
 
             if (queryParams.MinQuantity != default)
             {
-                items = items.Where(e => e.Quantity >= queryParams.MinQuantity);
+                query = query.Where(e => e.Quantity >= queryParams.MinQuantity);
             }
 
             if (queryParams.MaxQuantity != default)
             {
-                items = items.Where(e => e.Quantity <= queryParams.MaxQuantity);
+                query = query.Where(e => e.Quantity <= queryParams.MaxQuantity);
             }
 
             if (queryParams.From != default)
             {
-                items = items.Where(e => e.Quantity <= queryParams.MaxQuantity);
+                query = query.Where(e => e.Quantity <= queryParams.MaxQuantity);
             }
 
             if (queryParams.From != default)
             {
-                items = items.Where(e => e.CreatedAt >= queryParams.From);
+                query = query.Where(e => e.CreatedAt >= queryParams.From);
             }
 
             if (queryParams.To != default)
             {
-                items = items.Where(e => e.CreatedAt <= queryParams.To);
+                query = query.Where(e => e.CreatedAt <= queryParams.To);
             }
 
-            var query = items.Include(item => item.Product)
-                .Include(item => item.User)
-                .AsQueryable();
+            var projection = query.Select(e => new CartDTO
+            {
+                ProductId = e.Product.Id,
+                ProductName = e.Product.Name,
+                UnitPrice = e.Product.UnitPrice,
+                Quantity = e.Quantity,
+                QuantityInStock = e.Product.QuantityInStock,
+                UserId = e.User.Id,
+                UserName = e.User.Name,
+                UserPhoneNumber = e.User.PhoneNumber,
+                CreatedAt = e.CreatedAt
+            });
 
-            return await PaginationService.Paginate(query, queryParams.Page, queryParams.PageSize);
+            return await PaginationService.Paginate(projection, queryParams.Page, queryParams.PageSize);
         }
 
         public async Task<CartItem> GetSingleCartItem(long id)
