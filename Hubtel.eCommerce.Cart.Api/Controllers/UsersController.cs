@@ -12,7 +12,7 @@ using System;
 namespace Hubtel.eCommerce.Cart.Api.Controllers
 {
     [ValidationActionFilter]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UsersController : CustomControllerBase
     {

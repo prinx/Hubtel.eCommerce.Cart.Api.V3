@@ -12,7 +12,7 @@ using System;
 namespace Hubtel.eCommerce.Cart.Api.Controllers
 {
     [ValidationActionFilter]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CartsController : CustomControllerBase
     {
@@ -40,7 +40,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 var newItem = await _cartItemsService.CreateCartItem(cartItem);
 
-                _logger.LogInformation($"[{DateTime.Now}] POST: api/Carts: New cart item created for user {cartItem.UserId}");
+                _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Carts: New cart item created for user {cartItem.UserId}");
 
                 return CreatedAtAction(nameof(GetSingleCartItem), new { productId = cartItem.ProductId, userId = cartItem.UserId }, new ApiResponseDTO
                 {
