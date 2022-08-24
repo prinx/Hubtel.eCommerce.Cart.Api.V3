@@ -96,22 +96,43 @@ namespace Hubtel.eCommerce.Cart.Api.Services
             return await PaginationService.Paginate(projection, queryParams.Page, queryParams.PageSize);
         }
 
-        public async Task<CartItem> GetSingleCartItem(long id)
+        public async Task<CartDTO> GetSingleCartItem(long id)
         {
             _context.ChangeTracker.LazyLoadingEnabled = false;
             return await _context.CartItems
-                .Include(e => e.Product)
-                .Include(e => e.User)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .Where(e => e.Id == id)
+                .Select(e => new CartDTO
+                {
+                    ProductId = e.Product.Id,
+                    ProductName = e.Product.Name,
+                    UnitPrice = e.Product.UnitPrice,
+                    Quantity = e.Quantity,
+                    QuantityInStock = e.Product.QuantityInStock,
+                    UserId = e.User.Id,
+                    UserName = e.User.Name,
+                    UserPhoneNumber = e.User.PhoneNumber,
+                    CreatedAt = e.CreatedAt
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<CartItem> GetSingleCartItem(long productId, long userId)
+        public async Task<CartDTO> GetSingleCartItem(long productId, long userId)
         {
-            _context.ChangeTracker.LazyLoadingEnabled = false;
             return await _context.CartItems
-                .Include(e => e.Product)
-                .Include(e => e.User)
-                .FirstOrDefaultAsync(e => e.ProductId == productId && e.UserId == userId);
+                .Where(e => e.ProductId == productId && e.UserId == userId)
+                .Select(e => new CartDTO
+                {
+                    ProductId = e.Product.Id,
+                    ProductName = e.Product.Name,
+                    UnitPrice = e.Product.UnitPrice,
+                    Quantity = e.Quantity,
+                    QuantityInStock = e.Product.QuantityInStock,
+                    UserId = e.User.Id,
+                    UserName = e.User.Name,
+                    UserPhoneNumber = e.User.PhoneNumber,
+                    CreatedAt = e.CreatedAt
+                })
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateCartItem(long id, CartItemPostDTO cartItem)
@@ -185,7 +206,7 @@ namespace Hubtel.eCommerce.Cart.Api.Services
             return changedRow == 1;
         }
 
-        public async Task<CartItem> CreateCartItem(CartItemPostDTO item)
+        public async Task<CartDTO> CreateCartItem(CartItemPostDTO item)
         {
             _context.ChangeTracker.LazyLoadingEnabled = false;
 
@@ -198,7 +219,18 @@ namespace Hubtel.eCommerce.Cart.Api.Services
             _context.CartItems.Add(newItem);
             await _context.SaveChangesAsync();
 
-            return newItem;
+            return new CartDTO
+            {
+                ProductId = newItem.Product.Id,
+                ProductName = newItem.Product.Name,
+                UnitPrice = newItem.Product.UnitPrice,
+                Quantity = newItem.Quantity,
+                QuantityInStock = newItem.Product.QuantityInStock,
+                UserId = newItem.User.Id,
+                UserName = newItem.User.Name,
+                UserPhoneNumber = newItem.User.PhoneNumber,
+                CreatedAt = newItem.CreatedAt
+            };
         }
 
         public async Task ValidatePostRequestBody(CartItemPostDTO cartItem)
@@ -215,7 +247,16 @@ namespace Hubtel.eCommerce.Cart.Api.Services
                 throw new InvalidRequestInputException("Invalid product.");
             }
 
-            if (cartItem.Quantity > product.QuantityInStock)
+            int quantity = cartItem.Quantity;
+
+            CartItem existingCartItem = await RetrieveFullCartItem(cartItem);
+
+            if (existingCartItem != null)
+            {
+                quantity += existingCartItem.Quantity;
+            }
+
+            if (quantity > product.QuantityInStock)
             {
                 throw new InvalidRequestInputException("Not enough products.");
             }

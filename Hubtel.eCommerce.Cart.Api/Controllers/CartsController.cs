@@ -71,7 +71,18 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 Status = (int)HttpStatusCode.Created,
                 Success = true,
                 Message = "Product(s) added to cart successfully.",
-                Data = fullItem
+                Data = new CartDTO
+                {
+                    ProductId = fullItem.Product.Id,
+                    ProductName = fullItem.Product.Name,
+                    UnitPrice = fullItem.Product.UnitPrice,
+                    Quantity = fullItem.Quantity,
+                    QuantityInStock = fullItem.Product.QuantityInStock,
+                    UserId = fullItem.User.Id,
+                    UserName = fullItem.User.Name,
+                    UserPhoneNumber = fullItem.User.PhoneNumber,
+                    CreatedAt = fullItem.CreatedAt
+                }
             });
         }
 

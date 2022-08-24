@@ -145,9 +145,10 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 var newItem = await _cartItemsService.CreateCartItem(cartItem);
 
                 _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/CartItems: New cart item created for user {cartItem.UserId}");
-                newItem.User = null;
+                //newItem.User = null;
 
-                return CreatedAtAction(nameof(GetCartItem), new { id = newItem.Id }, new ApiResponseDTO
+                // Fix this: id should be cart item id
+                return CreatedAtAction(nameof(GetCartItem), new { id = newItem.ProductId }, new ApiResponseDTO
                 {
                     Status = (int)HttpStatusCode.Created,
                     Success = true,

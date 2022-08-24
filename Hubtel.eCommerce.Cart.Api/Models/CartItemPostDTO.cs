@@ -2,10 +2,8 @@
 {
     public class CartItemPostDTO
     {
-        public int Quantity { get; set; }
-
         public long ProductId { get; set; }
-
+        public int Quantity { get; set; }
         public long UserId { get; set; }
     }
 }

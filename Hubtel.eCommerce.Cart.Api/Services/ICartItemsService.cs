@@ -10,9 +10,9 @@ namespace Hubtel.eCommerce.Cart.Api.Services
 
         public Task<Pagination<CartDTO>> GetCartItems(CartItemGetManyParams queryParams);
 
-        public Task<CartItem> GetSingleCartItem(long id);
+        public Task<CartDTO> GetSingleCartItem(long id);
 
-        public Task<CartItem> GetSingleCartItem(long productId, long userId);
+        public Task<CartDTO> GetSingleCartItem(long productId, long userId);
 
         public Task<bool> UpdateCartItem(long id, CartItemPostDTO cartItem);
 
@@ -30,7 +30,7 @@ namespace Hubtel.eCommerce.Cart.Api.Services
 
         public Task<bool> UpdateCartItemQuantity(CartItem item, int quantity);
 
-        public Task<CartItem> CreateCartItem(CartItemPostDTO item);
+        public Task<CartDTO> CreateCartItem(CartItemPostDTO item);
 
         public Task ValidatePostRequestBody(CartItemPostDTO cartItem);
 
