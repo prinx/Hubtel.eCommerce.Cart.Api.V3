@@ -25,7 +25,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             _logger = logger;
         }
 
-        // GET: api/Users
+        // GET: api/v1/Users
         [HttpGet]
         public async Task<ActionResult> GetUsers(
             [FromQuery] int page = 1,
@@ -43,7 +43,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // GET: api/Users/5
+        // GET: api/v1/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser(long id)
         {
@@ -51,7 +51,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (user == null)
             {
-                _logger.LogInformation($"[{DateTime.Now}] GET: api/Users/{id}: User not found.");
+                _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Users/{id}: User not found.");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -69,7 +69,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // PUT: api/Users/5
+        // PUT: api/v1/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(long id, UserPostDTO user)
@@ -81,7 +81,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             //if (id != user.Id)
             //{
             //    logMessage = "Invalid User or Id.";
-            //    _logger.LogInformation($"[{DateTime.Now}] PUT: api/Users/{id}: {logMessage}");
+            //    _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Users/{id}: {logMessage}");
 
             //    return BadRequest(new ApiResponseDTO
             //   {
@@ -94,7 +94,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             if (!_usersService.UserExists(id))
             {
                 logMessage = "User not found.";
-                _logger.LogInformation($"[{DateTime.Now}] PUT: api/Users/{id}: {logMessage}");
+                _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Users/{id}: {logMessage}");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -108,7 +108,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!updated)
             {
-                _logger.LogInformation($"[{DateTime.Now}] PUT: api/Users/{id}: Error while saving updated user to database. Payload: {user}");
+                _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Users/{id}: Error while saving updated user to database. Payload: {user}");
 
                 return InternalServerError(new ApiResponseDTO
                 {
@@ -117,7 +117,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] PUT: api/Users/{id}: User updated successfully.");
+            _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Users/{id}: User updated successfully.");
 
             return Ok(new ApiResponseDTO
             {
@@ -128,7 +128,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             }); ;
         }
 
-        // POST: api/Users
+        // POST: api/v1/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult> PostUser(UserPostDTO user)
@@ -140,7 +140,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (_usersService.UserExists(user.PhoneNumber))
             {
-                _logger.LogInformation($"[{DateTime.Now}] POST: api/Users: " +
+                _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Users: " +
                     $"User with phone number {user.PhoneNumber} already exists.");
 
                 return Conflict(new ApiResponseDTO
@@ -153,7 +153,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             var newUser = await _usersService.CreateUser(user);
 
-            _logger.LogInformation($"[{DateTime.Now}] POST: api/Users: User with phone number {user.PhoneNumber} created successfully.");
+            _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Users: User with phone number {user.PhoneNumber} created successfully.");
 
             return CreatedAtAction("GetUser", new { id = newUser.Id }, new ApiResponseDTO
             {
@@ -164,7 +164,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/v1/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
@@ -172,7 +172,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (user == null)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Users/{id}: User does not exist. Cannot delete.");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Users/{id}: User does not exist. Cannot delete.");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -185,7 +185,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!deleted)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Users/{id}: Error while deleting user from database. Payload: {user}");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Users/{id}: Error while deleting user from database. Payload: {user}");
 
                 return InternalServerError(new ApiResponseDTO
                 {
@@ -194,7 +194,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Users/{id}: User deleted successfully.");
+            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Users/{id}: User deleted successfully.");
 
             return Ok(new ApiResponseDTO
             {

@@ -28,7 +28,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         // 1. Provide an endpoint to Add items to cart, with specified quantity
         // Adding similar items(same item ID) should increase the quantity - POST
 
-        // POST: api/Carts
+        // POST: api/v1/Carts
         [HttpPost]
         public async Task<ActionResult> PostCartItem(CartItemPostDTO cartItem)
         {
@@ -55,7 +55,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!updated)
             {
-                _logger.LogInformation($"[{DateTime.Now}] POST: api/Carts: Error while saving updated cart to database. Payload: {cartItem} Item: {fullItem}");
+                _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Carts: Error while saving updated cart to database. Payload: {cartItem} Item: {fullItem}");
 
                 return InternalServerError(new ApiResponseDTO
                 {
@@ -64,7 +64,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] POST: api/Carts: Product {fullItem.Product.Name} quantity increased in the cart of user {cartItem.UserId}");
+            _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Carts: Product {fullItem.Product.Name} quantity increased in the cart of user {cartItem.UserId}");
 
             return CreatedAtAction(nameof(GetSingleCartItem), new { productId = cartItem.ProductId, userId = cartItem.UserId }, new ApiResponseDTO
             {
@@ -76,7 +76,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         }
 
         // 2.a. Provide an endpoint to remove an item from cart - DELETE verb
-        // DELETE: api/Carts/5/2
+        // DELETE: api/v1/Carts/5/2
         [HttpDelete("{userId}/{productId}")]
         public async Task<IActionResult> DeleteCartItem(long userId, long productId)
         {
@@ -84,7 +84,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (cartItem == null)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Carts/{userId}/{productId}: Cart item does not exist.");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Carts/{userId}/{productId}: Cart item does not exist.");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -97,7 +97,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!deleted)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Carts/{userId}/{productId}: Error while deleting cart item from database.");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Carts/{userId}/{productId}: Error while deleting cart item from database.");
                 
                 return InternalServerError(new ApiResponseDTO
                 {
@@ -106,7 +106,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Carts/{userId}/{productId}: Cart item deleted successfully.");
+            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Carts/{userId}/{productId}: Cart item deleted successfully.");
 
             return Ok(new ApiResponseDTO
             {
@@ -117,7 +117,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         }
 
         // 2.b. Provide an endpoint to remove an item from cart - DELETE verb
-        // DELETE: api/Carts/5
+        // DELETE: api/v1/Carts/5
         //[HttpDelete("{id}")]
         //public async Task<IActionResult> DeleteCartItem(long id)
         //{
@@ -125,7 +125,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
         //    if (cartItem == null)
         //    {
-        //        _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Carts/{id}: Cart item does not exist. Cannot delete.");
+        //        _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Carts/{id}: Cart item does not exist. Cannot delete.");
 
         //        return NotFound(new ApiResponseDTO
         //        {
@@ -140,7 +140,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
         //    if (!deleted)
         //    {
-        //        _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Carts/{id}: Error while deleting cart from database. Payload: {cartItem}");
+        //        _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Carts/{id}: Error while deleting cart from database. Payload: {cartItem}");
 
         //        return InternalServerError(new ApiResponseDTO
         //        {
@@ -149,7 +149,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         //        });
         //    }
 
-        //    _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Carts/{id}: Cart deleted successfully.");
+        //    _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Carts/{id}: Cart deleted successfully.");
 
         //    return Ok(new ApiResponseDTO
         //    {
@@ -160,7 +160,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         //}
 
         // 3. Provide an endpoint list all cart items (with filters => phoneNumbers, time, quantity, item - GET
-        // GET: api/Carts
+        // GET: api/v1/Carts
         [HttpGet]
         public async Task<ActionResult> GetCartItems([FromQuery] CartItemGetManyParams queryParams)
         {
@@ -170,7 +170,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             var message = $"{pageItems.Items.Count} cart item(s) found.";
 
-            _logger.LogInformation($"[{DateTime.Now}] GET: api/Carts: {message}");
+            _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts: {message}");
 
             return Ok(new ApiResponseDTO
             {
@@ -182,7 +182,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         }
 
         // 4.a. Provide endpoint to get single item - GET
-        // GET: api/Carts/4/5
+        // GET: api/v1/Carts/4/5
         [HttpGet("{userId}/{productId}")]
         public async Task<ActionResult> GetSingleCartItem(long userId, long productId)
         {
@@ -192,7 +192,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             if (item == null)
             {
                 message = "Cart item not found.";
-                _logger.LogInformation($"[{DateTime.Now}] GET: api/Carts/{userId}/{productId}: {message}");
+                _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts/{userId}/{productId}: {message}");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -202,7 +202,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             }
 
             message = "Found.";
-            _logger.LogInformation($"[{DateTime.Now}] GET: api/Carts/{userId}/{productId}: {message}");
+            _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts/{userId}/{productId}: {message}");
 
             return Ok(new ApiResponseDTO
             {
@@ -214,7 +214,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         }
 
         // 4.b. Provide endpoint to get single item - GET
-        // GET: api/Carts/5
+        // GET: api/v1/Carts/5
         //[HttpGet("{id}")]
         //public async Task<ActionResult> GetCartItem(long id)
         //{
@@ -224,7 +224,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         //    if (item == null)
         //    {
         //        message = "Cart item not found.";
-        //        _logger.LogInformation($"[{DateTime.Now}] GET: api/Carts/{id}: {message}");
+        //        _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts/{id}: {message}");
 
         //        return NotFound(new ApiResponseDTO
         //        {
@@ -234,7 +234,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         //    }
 
         //    message = "Found.";
-        //    _logger.LogInformation($"[{DateTime.Now}] GET: api/Carts/{id}: {message}");
+        //    _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Carts/{id}: {message}");
 
         //    return Ok(new ApiResponseDTO
         //    {

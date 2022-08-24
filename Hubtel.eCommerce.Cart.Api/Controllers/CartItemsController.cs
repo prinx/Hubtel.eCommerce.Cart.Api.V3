@@ -25,7 +25,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             _cartItemsService = cartItemsService;
         }
 
-        // GET: api/CartItems
+        // GET: api/v1/CartItems
         [HttpGet]
         public async Task<ActionResult> GetCartItems(CartItemGetManyParams queryParams)
         {
@@ -35,7 +35,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             var message = $"{pageItems.Items.Count} cart item(s) Found.";
                 
-            _logger.LogInformation($"[{DateTime.Now}] GET: api/CartItems: {message}");
+            _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/CartItems: {message}");
 
             return Ok(new ApiResponseDTO
             {
@@ -46,7 +46,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // GET: api/CartItems/5
+        // GET: api/v1/CartItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCartItem(long id)
         {
@@ -56,7 +56,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             if (item == null)
             {
                 message = "Cart item not found.";
-                _logger.LogInformation($"[{DateTime.Now}] GET: api/CartItems/{id}: {message}");
+                _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/CartItems/{id}: {message}");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -66,7 +66,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             }
 
             message = "Found.";
-            _logger.LogInformation($"[{DateTime.Now}] GET: api/CartItems/{id}: {message}");
+            _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/CartItems/{id}: {message}");
 
             return Ok(new ApiResponseDTO
             {
@@ -77,7 +77,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // PUT: api/CartItems/5
+        // PUT: api/v1/CartItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCartItem(long id, CartItemPostDTO cartItem)
@@ -86,7 +86,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             //if (id != cartItem.Id)
             //{
-            //    _logger.LogInformation($"[{DateTime.Now}] PUT: api/CartItems/{id}: Id and cart item to update mismatch.");
+            //    _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/CartItems/{id}: Id and cart item to update mismatch.");
 
             //    return BadRequest(new ApiResponseDTO
             //    {
@@ -97,7 +97,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!_cartItemsService.CartItemExists(id))
             {
-                _logger.LogInformation($"[{DateTime.Now}] PUT: api/CartItems/{id}: Cart item to update not found.");
+                _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/CartItems/{id}: Cart item to update not found.");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -126,12 +126,12 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 };
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] PUT: api/CartItems/{id}: Cart item updated successfuly.");
+            _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/CartItems/{id}: Cart item updated successfuly.");
 
             return NoContent();
         }
 
-        // POST: api/CartItems
+        // POST: api/v1/CartItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult> PostCartItem(CartItemPostDTO cartItem)
@@ -144,7 +144,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 var newItem = await _cartItemsService.CreateCartItem(cartItem);
 
-                _logger.LogInformation($"[{DateTime.Now}] POST: api/CartItems: New cart item created for user {cartItem.UserId}");
+                _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/CartItems: New cart item created for user {cartItem.UserId}");
                 newItem.User = null;
 
                 return CreatedAtAction(nameof(GetCartItem), new { id = newItem.Id }, new ApiResponseDTO
@@ -177,7 +177,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 };
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] POST: api/CartItems: Product {fullItem.Product.Name} quantity increased in the cart of user {cartItem.UserId}");
+            _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/CartItems: Product {fullItem.Product.Name} quantity increased in the cart of user {cartItem.UserId}");
 
             return CreatedAtAction(nameof(GetCartItem), new { id = fullItem.Id }, new ApiResponseDTO
             {
@@ -188,7 +188,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // DELETE: api/CartItems/5
+        // DELETE: api/v1/CartItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCartItem(long id)
         {
@@ -196,7 +196,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (cartItem == null)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/CartItems/{id}: Cart item does not exist. Cannot delete.");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/CartItems/{id}: Cart item does not exist. Cannot delete.");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -211,7 +211,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!deleted)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/CartItems/{id}: Error while deleting cart from database. Payload: {cartItem}");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/CartItems/{id}: Error while deleting cart from database. Payload: {cartItem}");
 
                 var responseData = JsonSerializer.Serialize(new ApiResponseDTO
                 {
@@ -227,7 +227,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 };
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/CartItems/{id}: Cart deleted successfully.");
+            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/CartItems/{id}: Cart deleted successfully.");
 
             return NoContent();
         }

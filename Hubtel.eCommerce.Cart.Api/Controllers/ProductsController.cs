@@ -25,7 +25,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             _logger = logger;
         }
 
-        // GET: api/Products
+        // GET: api/v1/Products
         [HttpGet]
         public async Task<ActionResult> GetProducts(
             [FromQuery] int page = 1,
@@ -43,7 +43,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // GET: api/Products/5
+        // GET: api/v1/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProduct(long id)
         {
@@ -51,7 +51,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (product == null)
             {
-                _logger.LogInformation($"[{DateTime.Now}] GET: api/Products/{id}: Product not found.");
+                _logger.LogInformation($"[{DateTime.Now}] GET: api/v1/Products/{id}: Product not found.");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -69,7 +69,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // PUT: api/Products/5
+        // PUT: api/v1/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(long id, ProductPostDTO product)
@@ -81,7 +81,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             //if (id != product.Id)
             //{
             //    logMessage = "Invalid Product or Id.";
-            //    _logger.LogInformation($"[{DateTime.Now}] PUT: api/Products/{id}: {logMessage}");
+            //    _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Products/{id}: {logMessage}");
 
             //    return BadRequest(new ApiResponseDTO
             //    {
@@ -95,7 +95,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             if (!_productsService.ProductExists(id))
             {
                 logMessage = "Product not found.";
-                _logger.LogInformation($"[{DateTime.Now}] PUT: api/Products/{id}: {logMessage}");
+                _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Products/{id}: {logMessage}");
 
                 return NotFound(new ApiResponseDTO
                 {
@@ -109,7 +109,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!updated)
             {
-                _logger.LogInformation($"[{DateTime.Now}] PUT: api/Products/{id}: Error while saving updated product to database. Payload: {product}");
+                _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Products/{id}: Error while saving updated product to database. Payload: {product}");
 
                 return InternalServerError(new ApiResponseDTO
                 {
@@ -118,7 +118,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] PUT: api/Products/{id}: Product updated successfully.");
+            _logger.LogInformation($"[{DateTime.Now}] PUT: api/v1/Products/{id}: Product updated successfully.");
 
             return Ok(new ApiResponseDTO
             {
@@ -129,7 +129,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // POST: api/Products
+        // POST: api/v1/Products
         // To protect from overposting attacks,
         // see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -141,7 +141,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (_productsService.ProductExists(product.Name))
             {
-                _logger.LogInformation($"[{DateTime.Now}] POST: api/Products: " +
+                _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Products: " +
                     $"Product with Name {product.Name} already exists. ");
                 
                 return Conflict(new ApiResponseDTO
@@ -155,7 +155,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             //if (!created)
             //{
-            //    _logger.LogInformation($"[{DateTime.Now}] POST: api/Products: " +
+            //    _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Products: " +
             //        $"Error while saving new product to database. Paylaod: {product}. ItemToSave: {newProduct}");
 
             //    var responseData = JsonSerializer.Serialize(new ApiResponseDTO
@@ -172,7 +172,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             //    };
             //}
 
-            _logger.LogInformation($"[{DateTime.Now}] POST: api/Products: " +
+            _logger.LogInformation($"[{DateTime.Now}] POST: api/v1/Products: " +
                 $"Product with name '{product.Name}' created successfully.");
 
             return CreatedAtAction("GetProduct", new { id = newProduct.Id }, new ApiResponseDTO
@@ -184,7 +184,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             });
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/v1/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(long id)
         {
@@ -192,7 +192,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (product == null)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Products/{id}: " +
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Products/{id}: " +
                     $"Product with id {id} does not exist. Cannot delete product.");
 
                 return NotFound(new ApiResponseDTO
@@ -206,7 +206,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
             if (!deleted)
             {
-                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Products/{id}: Error while deleting product from database. Payload: {product}");
+                _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Products/{id}: Error while deleting product from database. Payload: {product}");
 
                 return InternalServerError(new ApiResponseDTO
                 {
@@ -215,7 +215,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 });
             }
 
-            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/Products/{id}: " +
+            _logger.LogInformation($"[{DateTime.Now}] DELETE: api/v1/Products/{id}: " +
                 $"Product with id {id} deleted successfully.");
 
             return Ok(new ApiResponseDTO
